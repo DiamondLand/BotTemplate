@@ -15,12 +15,10 @@ class InsertText(StatesGroup):
 
 class Utils(StatesGroup):
     mailing = State()
-    cabinet_number = State()
 
 
 not_in_state_filter = ~StateFilter(
     Utils.mailing,
-    Utils.cabinet_number,
     InsertText.text
 )
 

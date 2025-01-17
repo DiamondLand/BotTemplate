@@ -1,11 +1,11 @@
-from loguru import logger
 import os
+
+from loguru import logger
 
 # Настройка логирования
 log_dir = 'logs'
 os.makedirs(log_dir, exist_ok=True)
 
-# Настройка логирования в JSON-файлы
 logger.add(
     os.path.join(log_dir, '{time:YYYY-MM-DD}.json'), 
     rotation="1 day",  # Новый файл каждый день
@@ -17,9 +17,15 @@ logger.add(
 
 from aiogram import Router
 from aiogram.types import ErrorEvent
-from aiogram.exceptions import (AiogramError, TelegramAPIError, CallbackAnswerException, SceneException, UnsupportedKeywordArgument,
-                                TelegramNetworkError, TelegramRetryAfter, TelegramMigrateToChat, TelegramBadRequest, TelegramNotFound, TelegramConflictError,
-                                TelegramUnauthorizedError, TelegramForbiddenError, TelegramServerError, RestartingTelegram, TelegramEntityTooLarge, ClientDecodeError)
+from aiogram.exceptions import (
+    AiogramError, TelegramAPIError, CallbackAnswerException, 
+    SceneException, UnsupportedKeywordArgument,
+    TelegramRetryAfter, TelegramMigrateToChat, 
+    TelegramBadRequest, TelegramNotFound, TelegramConflictError,
+    TelegramUnauthorizedError, TelegramForbiddenError, 
+    TelegramServerError, RestartingTelegram, 
+    TelegramEntityTooLarge, ClientDecodeError
+)
 
 router = Router()
 

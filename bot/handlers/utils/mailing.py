@@ -31,69 +31,19 @@ async def mailing_send(message: Message, state: FSMContext):
     await message.answer(text=f"<b>💥💥💥 Рассылка запущена!</b>")
     start_time = time.time()  # Запоминаем время начала рассылки
 
-    # Делаем сообщение с подписью
-    text = f"Рассылка"
-    if message.text:
-        text += f":\n—\n{message.text}"
-
-    if message.caption:
-        text += f":\n—\n{message.caption}"
-
     # Рассылка по пользователям и чатам
     for user_id in all_profiles:
         chat_id = user_id['user_id'] if 'user_id' in user_id else user_id['chat_id'] 
         status = True
 
-        if message.text:
-            try:
-                await message.bot.send_message(
-                    chat_id=chat_id, 
-                    text=text
-                )
-            except: status = False
-        elif message.photo:
-            try:
-                await message.bot.send_photo(
-                    chat_id=chat_id, 
-                    photo=message.photo[-1].file_id,
-                    caption=text
-                )
-            except: status = False
-        elif message.document:
-            try:
-                await message.bot.send_document(
-                    chat_id=chat_id, 
-                    document=message.document.file_id,
-                    caption=text
-                )
-            except: status = False
-        elif message.video:
-            try:
-                await message.bot.send_video(
-                    chat_id=chat_id, 
-                    video=message.video.file_id,
-                    caption=text
-                )
-            except: status = False
-        elif message.video_note:
-            try:
-                await message.bot.send_message(
-                    chat_id=chat_id, 
-                    text=text
-                )
-                await message.bot.send_video_note(
-                    chat_id=chat_id, 
-                    video_note=message.video_note.file_id
-                )
-            except: status = False
-        elif message.voice:
-            try:
-                await message.bot.send_voice(
-                    chat_id=chat_id, 
-                    voice=message.voice.file_id,
-                    caption=text
-                )
-            except: status = False
+        try:
+           await message.bot.copy_message(
+                chat_id=chat_id,
+                from_chat_id=message.chat.id,
+                message_id=message.message_id
+            )
+        except: 
+            status = False
 
         if status is True:
             if 'user_id' in user_id:

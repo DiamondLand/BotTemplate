@@ -12,7 +12,7 @@ from functions.greeting import send_greeting
 
 from elements.inline.other_inline import support_button
 from events.states_group import Utils
-from config.advertisement import znakomstva_text, support_link
+from config.advertisement import support_link
 
 router = Router()
 
@@ -26,8 +26,7 @@ async def start_cmd(message: Message, state: FSMContext):
         logger.debug(f"Не удалось проверить аккаунт: {_ex}")
 
     await message.answer(
-        text=f"{send_greeting(username=message.from_user.first_name)}\
-            \nПожалуйста, выберите тип расписания для просмотра по кнопкам ниже"
+        text=f"{send_greeting(username=message.from_user.first_name)}"
     )
 
 
@@ -44,8 +43,7 @@ async def info_cmd(message: Message, state: FSMContext):
     botname = message.bot.config['SETTINGS']['name']
     message_text = (
         f"<b>СПРАВКА {hlink(botname, support_link)} v{message.bot.config['SETTINGS']['version']}:</b>"
-        f"\n\n Чтобы связаться с поддержкой бота, присоединитесь к <b>{hlink('группе', support_link)}</b> и задайте вопрос в нужном топике.",
-        f"\n\n<i>{znakomstva_text}</i>"
+        f"\n\n Чтобы связаться с поддержкой бота, присоединитесь к <b>{hlink('группе', support_link)}</b> и задайте вопрос в нужном топике."
     )
 
     await message.answer(

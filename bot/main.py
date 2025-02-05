@@ -7,7 +7,7 @@ from aiogram.client.bot import DefaultBotProperties
 from tortoise import Tortoise, run_async
 from loguru import logger
 
-from config.cfg import cfg, GROUPS_ID, ADMIN_CHATS
+from config.cfg import cfg, ADMIN_CHATS
 from middleware.throttling import ThrottlingMiddleware 
 from events import error_handler, states_group
 from handlers import commands_handler
@@ -18,9 +18,7 @@ bot = Bot(
     default=DefaultBotProperties(parse_mode=ParseMode.HTML)
 )
 bot.config = cfg
-bot.GROUPS_ID = GROUPS_ID
-bot.ADMIN_GROUP = ADMIN_CHATS
-bot.ADVERTISMENT = cfg["ADDITIONALLY"]["advertisement"]
+bot.ADMIN_CHATS = ADMIN_CHATS
 
 dp = Dispatcher()
 

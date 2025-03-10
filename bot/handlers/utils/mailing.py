@@ -58,3 +58,4 @@ async def mailing_send(message: Message, state: FSMContext):
             \nОтправлено пользователям: {user_counter}/{len(all_profiles)}.\
             \n\n<i>Рассылка длилась <b>{elapsed_time:.2f} сек.</b></i>"
     )
+    await state.clear()

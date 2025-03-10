@@ -1,3 +1,5 @@
+import psutil
+
 from loguru import logger
 
 from aiogram import Router
@@ -6,7 +8,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.markdown import hlink
 
-from database.services import get_or_create_user_service
+from database.services import get_or_create_user_service, get_users_service
 
 from functions.greeting import send_greeting
 
@@ -50,6 +52,24 @@ async def info_cmd(message: Message, state: FSMContext):
         text=message_text,
         reply_markup=support_button().as_markup()
     )
+
+
+# --- Отправка статистики --- #
+@router.message(Command("statistic", "bin"))
+async def statistic_cmd(message: Message):    
+    if int(message.chat.id) in map(int, message.bot.ADMIN_GROUP):
+        users_data = await get_users_service()
+        if users_data:
+            users_count = f"<b>Пользователей:</b> <code>{len(users_data)}</code>"
+        else:
+            users_count = "<b>Информации о пользователях нет</b>!"
+
+        await message.answer(
+            text=f"<b>СТАТИСТИКА:</b>\
+                \n\n{users_count}\
+                \n\n<b>CPU:</b> <code>{psutil.cpu_percent(interval=1)}</code> | <b>RAM:</b> <code>{psutil.virtual_memory().percent}</code>%\
+                \n<b>Использовано дискового пространства:</b> <code>{psutil.disk_usage('/').percent}</code>%"
+        )
 
 
 # --- Перейти в рассылку -> Написать текст --- #

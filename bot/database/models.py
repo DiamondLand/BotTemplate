@@ -7,9 +7,9 @@ class BaseORM(Model):
         abstract = True
 
     id: int = fields.IntField(pk=True)
-    created_at: datetime.datetime = fields.DatetimeField(auto_now_add=True)
-    updated_at: datetime.datetime = fields.DatetimeField(auto_now=True)
+    created_at: datetime = fields.DatetimeField(auto_now_add=True)
+    updated_at: datetime = fields.DatetimeField(auto_now=True)
 
 
 class User(BaseORM): # Для пользователей
-    user_id = fields.BigIntField(pk=True)
+    user_id = fields.BigIntField()

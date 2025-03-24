@@ -7,5 +7,6 @@ cfg = {
     }
 }
 
+MODER_CHANNEL_ID = 0
 CHANNEL_ID = 0
-ADMIN_CHATS = [0, 0, 0] 
+ADMIN_CHATS = [0, 0, 0, 0]

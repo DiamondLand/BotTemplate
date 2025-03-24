@@ -8,7 +8,6 @@ from tortoise import Tortoise, run_async
 from loguru import logger
 
 from config.cfg import cfg, ADMIN_CHATS
-from middleware.throttling import ThrottlingMiddleware 
 from events import error_handler, states_group
 from handlers import commands_handler
 from handlers.utils import mailing
@@ -38,8 +37,6 @@ async def main():
     logger.success("Successfully launched")
     await dp.start_polling(bot)
 
-# Подключаем ThrottlingMiddleware для всех роутеров
-dp.message.middleware(ThrottlingMiddleware(limit=1, period=0.6))
 
 # --- Подгрузка базы данных --- #
 async def init_db():

@@ -25,7 +25,6 @@ async def mailing_send(message: Message, state: FSMContext):
     # Получаем список всех анкет
     all_profiles = await get_users_service()
     user_counter = 0
-    chat_counter = 0
 
     await msg.delete()
     await message.answer(text=f"<b>💥💥💥 Рассылка запущена!</b>")
@@ -46,10 +45,7 @@ async def mailing_send(message: Message, state: FSMContext):
             status = False
 
         if status is True:
-            if 'user_id' in user_id:
-                user_counter += 1
-            else:
-                chat_counter += 1
+            user_counter += 1
 
     elapsed_time = time.time() - start_time  # Вычисляем время, затраченное на рассылку
 

@@ -13,6 +13,7 @@ from database.services import get_or_create_user_service, get_users_service
 from functions.greeting import send_greeting
 
 from elements.inline.other_inline import support_button
+from elements.keybord.kb import cancel_kb
 from events.states_group import Utils
 from config.advertisement import support_link
 
@@ -22,6 +23,14 @@ router = Router()
 # --- Основная панель --- #
 @router.message(Command("start"))
 async def start_cmd(message: Message, state: FSMContext):
+    # Если стадия существует, выходим из неё
+    if await state.get_state() is not None:
+        await message.answer(
+            text="🔎✨",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        await state.clear()
+
     try:
         await get_or_create_user_service(user_id=message.from_user.id)
     except Exception as _ex:
@@ -39,6 +48,7 @@ async def info_cmd(message: Message, state: FSMContext):
     if await state.get_state() is not None:
         await message.answer(
             text="🔎✨",
+            reply_markup=ReplyKeyboardRemove()
         )
         await state.clear()
 
@@ -56,7 +66,15 @@ async def info_cmd(message: Message, state: FSMContext):
 
 # --- Отправка статистики --- #
 @router.message(Command("statistic", "bin"))
-async def statistic_cmd(message: Message):    
+async def statistic_cmd(message: Message, state: FSMContext):
+    # Если стадия существует, выходим из неё
+    if await state.get_state() is not None:
+        await message.answer(
+            text="🔎✨",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        await state.clear()
+    
     if int(message.chat.id) in map(int, message.bot.ADMIN_CHATS):
         users_data = await get_users_service()
         if users_data:
@@ -75,13 +93,17 @@ async def statistic_cmd(message: Message):
 # --- Перейти в рассылку -> Написать текст --- #
 @router.message(Command("mailing", "bin2"))
 async def mailing_cmd(message: Message, state: FSMContext):
-    if int(message.chat.id) in map(int, message.bot.ADMIN_CHATS):
-        # Если стадия существует, выходим из неё
-        if await state.get_state() is not None:
-            await state.clear()
+    # Если стадия существует, выходим из неё
+    if await state.get_state() is not None:
+        await message.answer(
+            text="🔎✨",
+            reply_markup=ReplyKeyboardRemove()
+        )
+        await state.clear()
 
+    if int(message.chat.id) in map(int, message.bot.ADMIN_CHATS):
         await message.answer(
             text="💥 Введите <u>текст</u> или прикрепите <u>медиаконтент</u>, который будет отправлен всем пользователям:", 
-            reply_markup=ReplyKeyboardRemove()
+            reply_markup=cancel_kb()
         )
         await state.set_state(Utils.mailing)

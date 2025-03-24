@@ -1,20 +1,4 @@
-import os
-
 from loguru import logger
-
-# Настройка логирования
-log_dir = 'logs'
-os.makedirs(log_dir, exist_ok=True)
-
-logger.add(
-    os.path.join(log_dir, '{time:YYYY-MM-DD}.json'), 
-    rotation="1 day",  # Новый файл каждый день
-    retention="30 days",  # Удаление файлов старше 30 дней
-    level="WARNING",
-    format="{time} {level} {message}",  # Формат записи
-    serialize=True  # Запись в формате JSON
-)
-
 from aiogram import Router
 from aiogram.types import ErrorEvent
 from aiogram.exceptions import (

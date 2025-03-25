@@ -1,7 +1,6 @@
 from .models import User
 from tortoise.transactions import atomic
 
-@atomic()
 async def get_users_service():
     """
     Получает всех пользователей из базы данных.

@@ -72,7 +72,7 @@ async def statistic_cmd(message: Message, state: FSMContext):
         )
         await state.clear()
     
-    if int(message.chat.id) in map(int, message.bot.ADMIN_CHATS):
+    if int(message.chat.id) in map(int, message.bot.permanent_ids):
         users_data = await get_users_service()
         if users_data:
             users_count = f"<b>Пользователей:</b> <code>{len(users_data)}</code>"
@@ -98,7 +98,7 @@ async def mailing_cmd(message: Message, state: FSMContext):
         )
         await state.clear()
 
-    if int(message.chat.id) in map(int, message.bot.ADMIN_CHATS):
+    if int(message.chat.id) in map(int, message.bot.permanent_ids):
         await message.answer(
             text="💥 Введите <u>текст</u> или прикрепите <u>медиаконтент</u>, который будет отправлен всем пользователям:", 
             reply_markup=cancel_kb()

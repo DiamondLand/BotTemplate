@@ -15,16 +15,10 @@ from src.events import error_handler, states_group
 from src.handlers import commands_handler
 from src.handlers.utils import mailing
 
-bot = Bot(
-    token=cfg["SETTINGS"]["testing_token"], 
-    default=DefaultBotProperties(parse_mode=ParseMode.HTML)
-)
-bot.config = cfg
-bot.ADMIN_CHATS = ADMIN_CHATS
 
 dp = Dispatcher()
 
-MODE: Literal["DEV", "PROD"] = "DEV"
+MODE: Literal["DEV", "PROD"] = "PROD"
 if MODE == "DEV":
     TOKEN = cfg["SETTINGS"]["testing_token"]
 else:

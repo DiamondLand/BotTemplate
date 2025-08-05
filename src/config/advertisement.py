@@ -1,0 +1,1 @@
+support_link = "https://itc-team.ru/"

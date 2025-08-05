@@ -1,5 +1,5 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
-from .text_on_kb import cancel
+from src.elements.keybord.text_on_kb import cancel
 
 
 def cancel_kb() -> ReplyKeyboardMarkup:

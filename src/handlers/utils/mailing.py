@@ -5,9 +5,8 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
-from events.states_group import Utils
-
-from database.services import get_users_service
+from src.events.states_group import Utils
+from src.database.services import get_users_service
 
 router = Router()
 
@@ -32,22 +31,23 @@ async def mailing_send(message: Message, state: FSMContext):
 
     # Рассылка по пользователям и чатам
     for user_id in all_profiles:
-        chat_id = user_id['user_id'] if 'user_id' in user_id else user_id['chat_id'] 
+        chat_id = user_id['user_id'] if 'user_id' in user_id else user_id['chat_id']
         status = True
 
         try:
-           await message.bot.copy_message(
+            await message.bot.copy_message(
                 chat_id=chat_id,
                 from_chat_id=message.chat.id,
                 message_id=message.message_id
             )
-        except: 
+        except:
             status = False
 
         if status is True:
             user_counter += 1
 
-    elapsed_time = time.time() - start_time  # Вычисляем время, затраченное на рассылку
+    # Вычисляем время, затраченное на рассылку
+    elapsed_time = time.time() - start_time
 
     await message.answer(
         text=f"<b>Рассылка закончена!</b>\n\

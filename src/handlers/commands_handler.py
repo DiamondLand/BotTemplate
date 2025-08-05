@@ -8,14 +8,12 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.markdown import hlink
 
-from database.services import get_or_create_user_service, get_users_service
-
-from functions.greeting import send_greeting
-
-from elements.inline.other_inline import support_button
-from elements.keybord.kb import cancel_kb
-from events.states_group import Utils
-from config.advertisement import support_link
+from src.database.services import get_or_create_user_service, get_users_service
+from src.functions.greeting import send_greeting
+from src.elements.inline.other_inline import support_button
+from src.elements.keybord.kb import cancel_kb
+from src.events.states_group import Utils
+from src.config.advertisement import support_link
 
 router = Router()
 
@@ -55,7 +53,6 @@ async def info_cmd(message: Message, state: FSMContext):
     botname = message.bot.config['SETTINGS']['name']
     message_text = (
         f"<b>СПРАВКА {hlink(botname, support_link)} v{message.bot.config['SETTINGS']['version']}:</b>"
-        f"\n\n Чтобы связаться с поддержкой бота, присоединитесь к <b>{hlink('группе', support_link)}</b> и задайте вопрос в нужном топике."
     )
 
     await message.answer(

@@ -4,7 +4,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import StateFilter
 
-from elements.keybord.kb import cancel
+from src.elements.keybord.kb import cancel
 
 router = Router()
 

@@ -1,5 +1,6 @@
-from .models import User
+from src.database.models import User
 from tortoise.transactions import atomic
+
 
 async def get_users_service():
     """
